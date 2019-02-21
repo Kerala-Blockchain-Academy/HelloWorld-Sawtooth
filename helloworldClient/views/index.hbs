@@ -1,0 +1,33 @@
+<center>
+<h1> {{ title }} </h1> <br />
+<p style=" font-size: 25px; color :brown"> Write && Read</p> <br /> <br />
+</center>
+<div class="container-fluid" id="depositPage">
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+        <div class="col-md-4 col-sm-4 col-xs-12">
+            <!-- form start-->
+            <div class="wrapper">
+            <form class="form-container">
+                <div class="form-group">
+                    <center><label style="color: blue;text-align:center; font-family:'Open Sans', sans-serif;font-weight: normal; font-size: 50px;">Hyperledger Sawtooth</label></center>    
+                    <br /> <br /> <br />
+                   <center> <input type="text" class="form-control" id="textInput" placeholder=" Hello"></center>
+                </div><br /> <br />
+                <center><button type="submit" style="color:red; align:center;" class="btn btn-lg" onclick= "writemsg(event)" > Write</button>
+               <button type="submit" style="color: green;  align:center;" class="btn btn-lg" onclick= "readmsg(event)" > Read</button>
+               <br><br><br>
+                 <img src="/images/logo.png">
+
+                </center>
+
+                </form>
+            </div>
+
+            <!-- form end-->
+        </div>
+        <div class="col-md-4 col-sm-4 col-xs-12"></div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/javascripts/main.js"></script>
