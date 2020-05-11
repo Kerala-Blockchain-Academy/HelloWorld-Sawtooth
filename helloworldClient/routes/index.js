@@ -4,22 +4,24 @@ var { UserClient } = require('./UserClient')
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index',{title: 'KBA'});
+router.get('/', function (req, res, next) {
+  res.render('index', { title: 'HelloWorld' });
 });
 
-router.post('/',function(req, res){
-  var data = req.body.write;
-  console.log("Data sent to REST API", data);
+router.post('/write', function (req, res) {
+  const data = req.body.inputdata;
+  console.log("payload -->", data);
   var client = new UserClient();
-  client.send_data([data]);
-  res.send({message: "Data " +data+" successfully added"});
+  client.send_data(data);
+  res.send({ message: "Request sent" });
 })
 
-router.get('/state',async function(req,res){
+router.get('/read', async function (req, res) {
   var client = new UserClient();
-  var getData = client._send_to_rest_api(null);
-  console.log("Data got from REST API", getData);
-  getData.then(result => {res.send({ balance : result });});
+  var readData = client._send_to_rest_api(null);
+  readData.then(function (data) {
+    res.send({ statedata: data });
+  });
 })
+
 module.exports = router;
