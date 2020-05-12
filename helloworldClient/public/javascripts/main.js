@@ -1,7 +1,7 @@
 
 function writemsg(event) {
     event.preventDefault();
-    const data = document.getElementById('textInput').value;
+    const data = document.getElementById('textInput').value.trimRight();
     console.log(data);
     if (data.length == 0) {
         alert("Please enter the data");
@@ -39,13 +39,19 @@ function readmsg(event) {
         }
     })
         .then(function (response) {
-            console.log(response);
+            console.log("response---", response);
             return response.json();
         })
         .then(function (data) {
-            console.log(JSON.stringify(data));
-            alert("Your data is : " + data.statedata);
-            document.getElementById("textInput").value = "Data is " + data.statedata;
+            if (JSON.stringify(data) == "{}") {
+                console.log("No data exists");
+                alert("No data exists!");
+                document.getElementById('textInput').value = '';
+            } else {
+                console.log(JSON.stringify(data));
+                alert("Your data is : " + data.statedata);
+                document.getElementById("textInput").value = "Data is " + data.statedata;
+            }
         })
         .catch(function (err) {
             console.log(err);
