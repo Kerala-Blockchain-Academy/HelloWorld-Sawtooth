@@ -14,7 +14,7 @@
     "jade": "~1.11.0",
     "morgan": "~1.9.0",
     "node-fetch": "^2.3.0",
-    "sawtooth-sdk": "^1.0.5",
+    "sawtooth-sdk": "^1.1.1",
     "text-encoder": "0.0.4",
     "text-encoding": "^0.7.0"
   }

@@ -1,14 +1,13 @@
 
-FROM ubuntu:xenial
+FROM ubuntu:bionic
 
 ARG DEBIAN_FRONTEND=noninteractive
 
 RUN \
- apt-get update; \
- apt-get install curl -y; \ 
- echo "deb http://repo.sawtooth.me/ubuntu/ci xenial universe" >> /etc/apt/sources.list \
- && curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8AA7AF1F1091A5FD' | apt-key add - \
- && echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/bumper/stable xenial universe" >> /etc/apt/sources.list \
+ apt-get update \
+ && apt-get install -y -q curl gnupg \
+ && curl -sSL 'http://p80.pool.sks-keyservers.net/pks/lookup?op=get&search=0x8AA7AF1F1091A5FD' | apt-key add -  \
+ && echo 'deb [arch=amd64] http://repo.sawtooth.me/ubuntu/chime/stable bionic universe' >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y -q --no-install-recommends \
     apt-utils \
@@ -27,17 +26,3 @@ WORKDIR /project/sawtooth-helloworld/helloworldprocessor
 CMD npm install && npm start
 
 EXPOSE 4004/tcp
-
-RUN \
- if [ ! -z $HTTP_PROXY ] && [ -z $http_proxy ]; then \
-  http_proxy=$HTTP_PROXY; \
- fi; \
- if [ ! -z $HTTPS_PROXY ] && [ -z $https_proxy ]; then \
-  https_proxy=$HTTPS_PROXY; \
- fi; \
- if [ ! -z $http_proxy ]; then \
-  npm config set proxy $http_proxy; \
- fi; \
- if [ ! -z $https_proxy ]; then \
-  npm config set https-proxy $https_proxy; \
- fi
