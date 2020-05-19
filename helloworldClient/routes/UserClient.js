@@ -10,7 +10,7 @@ const FAMILY_NAME = "HelloWorld";
 const FAMILY_VERSION = "1.0";
 const privateKeyHex = "66ad89d0ff29b0267fba72ea8d40ef7975e10f8acde8d50d20cdf56ba9599c5e";
 
-// function to hash data
+// function to calculate hash of data
 function hash(v) {
   return createHash('sha512').update(v).digest('hex');
 }
@@ -94,7 +94,7 @@ class UserClient {
   async _send_to_rest_api(batchListBytes) {
     if (batchListBytes == null) {
       try {
-        var geturl = 'http://rest-api:8008/state/' + this.address
+        var geturl = 'http://rest-api:8008/state/' + this.address  //endpoint used to retrieve data from an addres in Sawtooth blockchain
         console.log("Getting from: " + geturl);
         let response = await fetch(geturl, {
           method: 'GET',
@@ -110,7 +110,7 @@ class UserClient {
     }
     else {
       try {
-        let resp = await fetch('http://rest-api:8008/batches', {
+        let resp = await fetch('http://rest-api:8008/batches', { //endpoint to which we write data in a Sawtooth blockchain
           method: 'POST',
           headers: { 'Content-Type': 'application/octet-stream' },
           body: batchListBytes

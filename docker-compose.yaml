@@ -2,7 +2,8 @@ version: '2.0'
 
 
 services:
-
+  
+  #container for the client application at port 3000
   helloworld-client:
      container_name: helloworld-client
      expose:
@@ -14,7 +15,8 @@ services:
        dockerfile: helloworldClient/DockerFile
      volumes:
          - '.:/project/sawtooth-helloworld'
-
+  
+  #container for the transaction processor
   helloworld-processor:
     container_name: helloworld-processor
     build:
@@ -24,7 +26,8 @@ services:
         - validator
     volumes:
         - '.:/project/sawtooth-helloworld'
-
+  
+  #container for Sawtooth REST API, used for the communication between the client and validator
   sawtooth-rest-api:
     image: hyperledger/sawtooth-rest-api:chime
     container_name: rest-api
@@ -35,13 +38,15 @@ services:
     depends_on:
       - validator
     entrypoint: sawtooth-rest-api -vv -C tcp://validator:4004 --bind rest-api:8008
-
+  
+   #container for 'settings-tp', a required transaction processor for all Sawtooth applications, which handles the on-chain configurations
   settings-tp:
     image: hyperledger/sawtooth-settings-tp:chime
     depends_on:
       - validator
     entrypoint: settings-tp -vv -C tcp://validator:4004
-
+  
+  #container for a validator in a Sawtooth network.
   validator:
     image: hyperledger/sawtooth-validator:chime
     container_name: validator
@@ -49,7 +54,6 @@ services:
       - 4004
     ports:
       - "4004:4004"
-    # start the validator with an empty genesis batch
     entrypoint: "bash -c \"\
         sawadm keygen && \
         sawtooth keygen my_key && \
@@ -67,6 +71,7 @@ services:
           --bind consensus:tcp://eth0:5050 \
         \""
 
+  #default consensus engine for development purposes
   devmode-engine:
     image: hyperledger/sawtooth-devmode-engine-rust:chime
     container_name: sawtooth-devmode-engine-rust-default

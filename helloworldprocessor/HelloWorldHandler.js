@@ -33,7 +33,7 @@ class HelloWorldHandler extends TransactionHandler {
         super(FAMILY_NAME, ['1.0'], [NAMESPACE]);
     }
 
-    //apply function
+    //apply function - execution starts here when a transaction reaches the validator for this transaction proceesssor
     apply(transactionProcessRequest, context) {
         var msg = decoder.decode(transactionProcessRequest.payload);
         let header = transactionProcessRequest.header
