@@ -94,7 +94,7 @@ class UserClient {
   async _send_to_rest_api(batchListBytes) {
     if (batchListBytes == null) {
       try {
-        var geturl = 'http://rest-api:8008/state/' + this.address  //endpoint used to retrieve data from an addres in Sawtooth blockchain
+        var geturl = 'http://rest-api:8008/state/' + this.address  //endpoint used to retrieve data from an address in Sawtooth blockchain
         console.log("Getting from: " + geturl);
         let response = await fetch(geturl, {
           method: 'GET',
